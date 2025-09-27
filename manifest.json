@@ -1,0 +1,12 @@
+{
+  "domain": "samsung_windfree_avant",
+  "name": "Samsung WindFree Avant",
+  "version": "0.6.0",
+  "documentation": "https://github.com/themuch90/samsung_windfree_avant",
+  "requirements": [],
+  "codeowners": [
+    "lorenzo_moscheni"
+  ],
+  "iot_class": "cloud_polling",
+  "config_flow": true
+}
