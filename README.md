@@ -34,7 +34,7 @@ Testato  con :
 ## Debug rapido API
 ```bash
 # Elenco dispositivi
-curl -s -H "Authorization: Bearer $ST_TOKEN"   "https://api.smartthings.com/v1/devices" | jq '.items | length'
+curl -s -H "Authorization: Bearer $ST_TOKEN"   "https://api.smartthings.com/v1/devices" | jq .
 
 # Stato device
 curl -s -H "Authorization: Bearer $ST_TOKEN"   "https://api.smartthings.com/v1/devices/<DEVICE_ID>/status" | jq
