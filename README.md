@@ -1,5 +1,5 @@
 # Integrazione
-**Versione:** `0.6.2`   
+**Versione:** `0.6.3`   
 **Domain:** `samsung_windfree_avant`
 
 Questa integrazione custom controlla **Samsung WindFree Avant** tramite **SmartThings API (PAT)**.
@@ -18,7 +18,7 @@ Testato  con :
 
 ## Requisiti
 - **Home Assistant** 2023.6+ (consigliato 2025.x+).
-- **SmartThings Personal Access Token (PAT)**
+- **SmartThings Personal Access Token (PAT)** con scope: `r:devices:*` e `x:devices:*`.
   - Accedere al portale [API](https://account.smartthings.com/tokens) con l'account del condizionatore e creare un nuovo token
 
 ## Installazione

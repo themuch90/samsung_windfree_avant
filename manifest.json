@@ -1,7 +1,7 @@
 {
   "domain": "samsung_windfree_avant",
   "name": "Samsung WindFree Avant",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "documentation": "https://github.com/themuch90/samsung_windfree_avant",
   "requirements": [],
   "codeowners": [
