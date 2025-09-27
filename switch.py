@@ -65,13 +65,13 @@ class BeepSwitch(_BaseSTSwitch):
         return val == "on"
 
     async def async_turn_on(self, **kwargs):
-        await self.coordinator.client.command(self.device_id, "main", "samsungce.airConditionerBeep", "setBeep", ["on"])
+        await self.coordinator.client.command(self.device_id, "main", "samsungce.airConditionerBeep", "on")
         self.coordinator.data["beep"][self.device_id] = "on"
         self.coordinator.async_set_updated_data(self.coordinator.data)
         #await self.coordinator.async_request_refresh()
 
     async def async_turn_off(self, **kwargs):
-        await self.coordinator.client.command(self.device_id, "main", "samsungce.airConditionerBeep", "setBeep", ["off"])
+        await self.coordinator.client.command(self.device_id, "main", "samsungce.airConditionerBeep", "off")
         self.coordinator.data["beep"][self.device_id] = "off"
         self.coordinator.async_set_updated_data(self.coordinator.data)
         #await self.coordinator.async_request_refresh()

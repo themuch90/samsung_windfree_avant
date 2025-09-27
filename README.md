@@ -1,5 +1,5 @@
 # Integrazione
-**Versione:** `0.6.1`   
+**Versione:** `0.6.2`   
 **Domain:** `samsung_windfree_avant`
 
 Questa integrazione custom controlla **Samsung WindFree Avant** tramite **SmartThings API (PAT)**.
