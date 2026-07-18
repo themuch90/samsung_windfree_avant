@@ -61,6 +61,7 @@ class SmartThingsClimate(CoordinatorEntity, ClimateEntity):
     _attr_has_entity_name = True
     _attr_icon = "mdi:air-conditioner"
     _attr_temperature_unit = UnitOfTemperature.CELSIUS
+    _attr_target_temperature_step = 1
     _attr_supported_features = (
         ClimateEntityFeature.TARGET_TEMPERATURE
         | ClimateEntityFeature.FAN_MODE

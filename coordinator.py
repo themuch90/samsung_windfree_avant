@@ -5,24 +5,28 @@ from datetime import timedelta
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.core import HomeAssistant
 from .const import UPDATE_INTERVAL
-from .vendor.smartthings_pat import SmartThingsClient, SmartThingsError
+from .vendor.smartthings_client import SmartThingsClient, SmartThingsError
+from .oauth import TokenManager
 
 _LOGGER = logging.getLogger(__name__)
 
 class SmartThingsCoordinator(DataUpdateCoordinator):
-    def __init__(self, hass: HomeAssistant, client: SmartThingsClient):
+    def __init__(self, hass: HomeAssistant, client: SmartThingsClient, token_manager: TokenManager):
         jitter = random.randint(0, 5)
         super().__init__(
             hass,
             logger=_LOGGER,
-            name="SmartThings PAT",
+            name="SmartThings OAuth2",
             update_interval=timedelta(seconds=UPDATE_INTERVAL + jitter),
         )
         self.client = client
+        self.token_manager = token_manager
         self.device_ids = []
         self.device_labels = {}
 
     async def _async_update_data(self):
+        token = await self.token_manager.async_get_valid_token()
+        self.client.set_token(token)
         try:
             if not self.device_ids:
                 devs = await self.client.list_devices()

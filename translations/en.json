@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect SmartThings (OAuth2)",
+        "description": "**Before continuing, create a SmartThings API App using the SmartThings CLI:**\n\n1. Go to [{cli_url}]({cli_url}) and download `smartthings.msi` (Windows).\n2. Install `smartthings.msi`.\n3. Open **Command Prompt as Administrator**.\n4. Run:\n   ```\n   smartthings apps:create\n   ```\n5. Follow the guided prompts. Select the scopes: `r:devices:*` e `x:devices:*`. When asked for the **Redirect URI**, paste exactly this (copy it from here, it must match character for character):\n\n   `{redirect_uri}`\n\n6. At the end the CLI will show you the **Client ID** and **Client Secret** (shown only once: copy them right away). Enter them below.",
+        "data": {
+          "client_id": "Client ID",
+          "client_secret": "Client Secret"
+        }
+      },
+      "authorize": {
+        "title": "Authorize the app on SmartThings",
+        "description": "Click the link below: it will open the SmartThings consent screen with the fields already pre-filled (client, redirect URI, permissions).\n\n[👉 Open the SmartThings authorization link]({auth_url})\n\nAfter logging in and clicking **Authorize**, the browser will try to load a redirect page (it's normal to get an error like \"page not found\": that's not a problem).\n\n**Check your browser's address bar right away**: it will contain something like `...?code=XXXXXXXX`. Copy only the value after `code=` and paste it below **within a few seconds**: the code can only be used once and expires very quickly. If it expires, go back and regenerate the link.",
+        "data": {
+          "code": "Authorization code"
+        }
+      }
+    },
+    "error": {
+      "auth_failed": "Code exchange failed. Check the Home Assistant logs for details, or the code may have expired: try again with a new one."
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Samsung Windfree Avant options"
+      }
+    }
+  }
+}

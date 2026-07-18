@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Collega SmartThings (OAuth2)",
+        "description": "**Prima di continuare, crea una SmartThings API App con la SmartThings CLI:**\n\n1. Vai su [{cli_url}]({cli_url}) e scarica `smartthings.msi` (Windows).\n2. Installa `smartthings.msi`.\n3. Apri il **Prompt dei comandi come amministratore**.\n4. Esegui:\n   ```\n   smartthings apps:create\n   ```\n5. Segui le istruzioni guidate. Seleziona gli scope: `r:devices:*` e `x:devices:*`. Quando ti viene chiesto il **Redirect URI**, incolla esattamente questo (copialo da qui, deve combaciare al carattere):\n\n   `{redirect_uri}`\n\n6. Al termine la CLI ti mostrerà **Client ID** e **Client Secret** (vengono mostrati una sola volta: copiali subito). Inseriscili qui sotto.",
+        "data": {
+          "client_id": "Client ID",
+          "client_secret": "Client Secret"
+        }
+      },
+      "authorize": {
+        "title": "Autorizza l'app su SmartThings",
+        "description": "Clicca sul link qui sotto: si aprirà il consenso SmartThings con i campi già pre-compilati (client, redirect URI, permessi).\n\n[👉 Apri il link di autorizzazione SmartThings]({auth_url})\n\nDopo aver effettuato il login e premuto **Autorizza**, il browser proverà a caricare una pagina di redirect (è normale che dia un errore tipo \"pagina non trovata\": non è un problema).\n\n**Guarda subito la barra degli indirizzi del browser**: conterrà qualcosa come `...?code=XXXXXXXX`. Copia solo il valore dopo `code=` e incollalo qui sotto **entro pochi secondi**: il code è utilizzabile una sola volta e scade molto rapidamente. Se scade, torna indietro e rigenera il link.",
+        "data": {
+          "code": "Authorization code"
+        }
+      }
+    },
+    "error": {
+      "auth_failed": "Scambio del code fallito. Controlla i log di Home Assistant per il dettaglio, oppure il code è scaduto: riprova generandone uno nuovo."
+    },
+    "abort": {
+      "already_configured": "Questo dispositivo è già configurato."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opzioni Samsung Windfree Avant"
+      }
+    }
+  }
+}

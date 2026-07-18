@@ -17,6 +17,10 @@ class SmartThingsClient:
         self._own_session = session is None
         self._session = session or aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=20))
 
+    def set_token(self, token: str) -> None:
+        """Aggiorna il token usato per le richieste (es. dopo un refresh OAuth2)."""
+        self._headers["Authorization"] = f"Bearer {token}"
+
     async def close(self):
         if self._own_session and not self._session.closed:
             await self._session.close()
