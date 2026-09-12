@@ -1,5 +1,7 @@
 # Integrazione
-**Versione:** `0.6.4`
+*[Read this in English](README.en.md)*
+
+**Versione:** `0.6.6`
 **Domain:** `samsung_windfree_avant`
 
 Questa integrazione custom controlla **Samsung WindFree Avant** tramite **SmartThings API**, con autenticazione **OAuth2** (access token + refresh token rinnovati automaticamente in background — nessun intervento manuale periodico richiesto).
@@ -15,6 +17,7 @@ Testato con:
   - **Beep** (`samsungce.airConditionerBeep` → `setBeep` on/off)
   - **Auto Cleaning** (`custom.autoCleaningMode` → `setAutoCleaningMode` on/off)
 - Autenticazione **OAuth2** con refresh automatico di `access_token`/`refresh_token`: una volta configurata, non scade mai finché l'integrazione gira regolarmente.
+- Icona/logo Samsung mostrati automaticamente per l'integrazione (cartella `brand/`, riconosciuta nativamente da Home Assistant 2026.3+).
 
 ## Requisiti
 - **Home Assistant** 2023.6+ (consigliato 2025.x+).
@@ -31,6 +34,11 @@ Testato con:
 4. Nel primo step, segui le istruzioni per creare l'API App (vedi sopra) e inserisci **Client ID** e **Client Secret**.
 5. Nel secondo step, clicca il link di autorizzazione mostrato: si aprirà il consenso SmartThings con i campi già pre-compilati. Dopo aver autorizzato, copia il parametro `code` dalla barra degli indirizzi del browser (scade rapidamente ed è utilizzabile una sola volta) e incollalo nel form.
 6. L'integrazione ottiene `access_token`/`refresh_token` e da quel momento si rinnova da sola in background — nessuna manutenzione periodica richiesta.
+
+## Riautenticazione / Riconfigurazione
+Se il `refresh_token` viene revocato o scade (es. app SmartThings disabilitata o ricreata), Home Assistant mostra automaticamente un avviso con il pulsante **Riconfigura** sull'integrazione: basta seguirlo per rifare l'autorizzazione senza dover cancellare e riaggiungere l'integrazione (i dispositivi ed eventuali automazioni restano invariati).
+
+Lo stesso flow è disponibile in ogni momento anche manualmente da **Impostazioni → Dispositivi e servizi → Samsung WindFree Avant → ⋮ → Riconfigura**, ad esempio se hai rigenerato client_id/client_secret.
 
 ## Creare la SmartThings API App (una tantum)
 1. Scarica e installa la SmartThings CLI da: https://github.com/SmartThingsCommunity/smartthings-cli (su Windows: `smartthings.msi`).
