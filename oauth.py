@@ -1,5 +1,7 @@
 from __future__ import annotations
 import time, base64, logging
+import aiohttp
+from homeassistant.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from .const import OAUTH_TOKEN_URL
 
@@ -26,25 +28,40 @@ class TokenManager:
         session = async_get_clientsession(self.hass)
         client_id = self.entry.data["client_id"]
         client_secret = self.entry.data["client_secret"]
-        refresh_token = self.entry.data["refresh_token"]
+        refresh_token = self.entry.data.get("refresh_token")
+        if not refresh_token:
+            raise ConfigEntryAuthFailed("missing_refresh_token")
+
         auth = base64.b64encode(f"{client_id}:{client_secret}".encode()).decode()
-        resp = await session.post(
-            OAUTH_TOKEN_URL,
-            headers={
-                "Authorization": f"Basic {auth}",
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            data={
-                "grant_type": "refresh_token",
-                "client_id": client_id,
-                "client_secret": client_secret,
-                "refresh_token": refresh_token,
-            },
-        )
+        try:
+            resp = await session.post(
+                OAUTH_TOKEN_URL,
+                headers={
+                    "Authorization": f"Basic {auth}",
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                data={
+                    "grant_type": "refresh_token",
+                    "client_id": client_id,
+                    "client_secret": client_secret,
+                    "refresh_token": refresh_token,
+                },
+            )
+        except aiohttp.ClientError as err:
+            # Problema di rete/DNS/timeout: transitorio, HA ritenterà da solo.
+            raise ConfigEntryNotReady(f"Errore di rete durante il refresh del token: {err}") from err
+
+        if resp.status in (400, 401):
+            # SmartThings rifiuta il refresh_token (scaduto/revocato/app disabilitata):
+            # serve che l'utente riautorizzi l'app, non ha senso ritentare da soli.
+            text = await resp.text()
+            _LOGGER.error("Refresh token rifiutato da SmartThings (%s): %s", resp.status, text)
+            raise ConfigEntryAuthFailed("token_refresh_failed")
         if resp.status != 200:
             text = await resp.text()
             _LOGGER.error("Refresh token fallito: %s", text)
-            raise RuntimeError("token_refresh_failed")
+            raise ConfigEntryNotReady(f"SmartThings ha risposto {resp.status} durante il refresh del token")
+
         payload = await resp.json()
         new_data = dict(self.entry.data)
         new_data["access_token"] = payload["access_token"]

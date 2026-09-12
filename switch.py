@@ -42,13 +42,11 @@ class LightingSwitch(_BaseSTSwitch):
         await self.coordinator.client.command(self.device_id, "main", "samsungce.airConditionerLighting", "on")
         self.coordinator.data["lighting"][self.device_id] = "on"
         self.coordinator.async_set_updated_data(self.coordinator.data)
-        #await self.coordinator.async_request_refresh()
 
     async def async_turn_off(self, **kwargs):
         await self.coordinator.client.command(self.device_id, "main", "samsungce.airConditionerLighting", "off")
         self.coordinator.data["lighting"][self.device_id] = "off"
         self.coordinator.async_set_updated_data(self.coordinator.data)
-        #await self.coordinator.async_request_refresh()
 
 class BeepSwitch(_BaseSTSwitch):
     _attr_has_entity_name = True
@@ -68,13 +66,11 @@ class BeepSwitch(_BaseSTSwitch):
         await self.coordinator.client.command(self.device_id, "main", "samsungce.airConditionerBeep", "on")
         self.coordinator.data["beep"][self.device_id] = "on"
         self.coordinator.async_set_updated_data(self.coordinator.data)
-        #await self.coordinator.async_request_refresh()
 
     async def async_turn_off(self, **kwargs):
         await self.coordinator.client.command(self.device_id, "main", "samsungce.airConditionerBeep", "off")
         self.coordinator.data["beep"][self.device_id] = "off"
         self.coordinator.async_set_updated_data(self.coordinator.data)
-        #await self.coordinator.async_request_refresh()
 
 class AutoCleanSwitch(_BaseSTSwitch):
     _attr_has_entity_name = True
@@ -94,10 +90,8 @@ class AutoCleanSwitch(_BaseSTSwitch):
         await self.coordinator.client.command(self.device_id, "main", "custom.autoCleaningMode", "setAutoCleaningMode", ["on"])
         self.coordinator.data["autoclean"][self.device_id] = "on"
         self.coordinator.async_set_updated_data(self.coordinator.data)
-        #await self.coordinator.async_request_refresh()
 
     async def async_turn_off(self, **kwargs):
         await self.coordinator.client.command(self.device_id, "main", "custom.autoCleaningMode", "setAutoCleaningMode", ["off"])
         self.coordinator.data["autoclean"][self.device_id] = "off"
         self.coordinator.async_set_updated_data(self.coordinator.data)
-        #await self.coordinator.async_request_refresh()

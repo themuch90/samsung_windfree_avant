@@ -15,13 +15,31 @@
         "data": {
           "code": "Authorization code"
         }
+      },
+      "reauth_confirm": {
+        "title": "Riautentica Samsung Windfree Avant",
+        "description": "L'autenticazione con SmartThings non è più valida (token di refresh scaduto o revocato). Controlla Client ID e Client Secret (puoi lasciarli invariati se non sono cambiati) e prosegui per riautorizzare l'app.\n\nRedirect URI da usare se devi ricreare la SmartThings API App:\n\n`{redirect_uri}`",
+        "data": {
+          "client_id": "Client ID",
+          "client_secret": "Client Secret"
+        }
+      },
+      "reconfigure": {
+        "title": "Riconfigura Samsung Windfree Avant",
+        "description": "Aggiorna Client ID / Client Secret se necessario e riautorizza l'app su SmartThings.\n\nRedirect URI da usare se devi ricreare la SmartThings API App:\n\n`{redirect_uri}`",
+        "data": {
+          "client_id": "Client ID",
+          "client_secret": "Client Secret"
+        }
       }
     },
     "error": {
       "auth_failed": "Scambio del code fallito. Controlla i log di Home Assistant per il dettaglio, oppure il code è scaduto: riprova generandone uno nuovo."
     },
     "abort": {
-      "already_configured": "Questo dispositivo è già configurato."
+      "already_configured": "Questo dispositivo è già configurato.",
+      "reauth_successful": "Riautenticazione completata con successo.",
+      "reconfigure_successful": "Riconfigurazione completata con successo."
     }
   },
   "options": {

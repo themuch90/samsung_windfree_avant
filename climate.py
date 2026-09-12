@@ -10,7 +10,7 @@ from .const import DOMAIN
 from .coordinator import SmartThingsCoordinator
 
 API_TO_HA_MODES = {
-    "off" : "off", # Not supported from API, but is used to chenge the "switch" state
+    "off" : "off", # Not supported from API, used to change the "switch" state
     "auto": "auto",
     "cool": "cool",
     "heat": "heat",
@@ -133,7 +133,6 @@ class SmartThingsClimate(CoordinatorEntity, ClimateEntity):
             await self.coordinator.client.command(self.device_id, "main", "airConditionerMode", "setAirConditionerMode", [st_mode])
             self.coordinator.data["mode"][self.device_id] = st_mode
         self.coordinator.async_set_updated_data(self.coordinator.data)
-        #await self.coordinator.async_request_refresh()
 
     async def async_set_temperature(self, **kwargs):
         temp = kwargs.get(ATTR_TEMPERATURE)
@@ -142,25 +141,21 @@ class SmartThingsClimate(CoordinatorEntity, ClimateEntity):
             await self.coordinator.client.command(self.device_id, "main", "thermostatCoolingSetpoint", "setCoolingSetpoint", [t])
             self.coordinator.data["cool_sp"][self.device_id] = t
             self.coordinator.async_set_updated_data(self.coordinator.data)
-            #await self.coordinator.async_request_refresh()
 
     async def async_set_fan_mode(self, fan_mode: str):
         api_val = HA_TO_API_FAN_MODES.get(fan_mode, "auto")
         await self.coordinator.client.command(self.device_id, "main", "airConditionerFanMode", "setFanMode", [api_val])
         self.coordinator.data["fan"][self.device_id] = api_val
         self.coordinator.async_set_updated_data(self.coordinator.data)
-        #await self.coordinator.async_request_refresh()
 
     async def async_set_swing_mode(self, swing_mode: str):
         api_val = HA_TO_API_SWING_MODES.get(swing_mode, "fixed")
         await self.coordinator.client.command(self.device_id, "main", "fanOscillationMode", "setFanOscillationMode", [api_val])
         self.coordinator.data["swing"][self.device_id] = api_val
         self.coordinator.async_set_updated_data(self.coordinator.data)
-        #await self.coordinator.async_request_refresh()
 
     async def async_set_preset_mode(self, preset_mode: str):
         api_val = HA_TO_API_PRESET.get(preset_mode, "off")
         await self.coordinator.client.command(self.device_id, "main", "custom.airConditionerOptionalMode", "setAcOptionalMode", [api_val])
         self.coordinator.data["opt_mode"][self.device_id] = api_val
         self.coordinator.async_set_updated_data(self.coordinator.data)
-        #await self.coordinator.async_request_refresh()
